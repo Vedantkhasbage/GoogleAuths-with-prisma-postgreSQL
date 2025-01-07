@@ -96,7 +96,7 @@ exports.userRouter.post("/GoogleSignUp", (req, res) => __awaiter(void 0, void 0,
 exports.userRouter.post("/SignIn", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const requiredDataTypes = zod_1.default.object({
-            email: zod_1.default.string().min(5).max(100),
+            email: zod_1.default.string().min(5).max(100).email(),
             password: zod_1.default.string().min(5).max(100)
         });
         const CheckDataTypes = requiredDataTypes.safeParse(req.body);
@@ -143,6 +143,11 @@ exports.userRouter.post("/SignIn", (req, res) => __awaiter(void 0, void 0, void 
         const token = jsonwebtoken_1.default.sign({
             userId: CheckUserWithEmail.id
         }, JWT_KEY);
+        res.cookie("uid", token, {
+            httpOnly: true, // Prevent JavaScript access
+            secure: false,
+        });
+        console.log(res);
         res.json({
             message: token
         });

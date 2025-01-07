@@ -103,7 +103,7 @@ userRouter.post("/SignIn",async(req,res)=>{
 
     try {
         const requiredDataTypes = z.object({
-            email: z.string().min(5).max(100),
+            email: z.string().min(5).max(100).email(),
             password: z.string().min(5).max(100)
         })
 
@@ -161,6 +161,11 @@ userRouter.post("/SignIn",async(req,res)=>{
         const token=jwt.sign({
             userId:CheckUserWithEmail.id
         },JWT_KEY);
+        res.cookie("uid",token,{
+            httpOnly: true, // Prevent JavaScript access
+            secure: false,
+        });
+        console.log(res)
         res.json({
             message:token
         })

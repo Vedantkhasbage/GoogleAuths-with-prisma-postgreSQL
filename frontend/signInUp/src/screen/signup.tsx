@@ -16,7 +16,8 @@ export const SignUp=()=>{
           email:emailRef.current?.value,
           password:passwordRef.current?.value
      }) 
-     console.log(response);
+     console.log("hello")
+     console.log(response)
 
      if(response.data.message!=="Invalid"){
         navigate("/SignIn");

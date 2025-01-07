@@ -6,8 +6,11 @@ const app=express();
 import cors from 'cors';
 
 app.use(express.json());
-app.use(cors());
-app.use("/user",userRouter);
+
+app.use(cors({
+    origin: "http://localhost:5173", // Your frontend origin
+    credentials: true, // Allow credentials (cookies)
+}));app.use("/user",userRouter);
 
 
 app.listen(3000,()=>{
